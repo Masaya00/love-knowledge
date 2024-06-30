@@ -1,4 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native'
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const MemoListItem = () => {
     return (
@@ -8,7 +9,9 @@ const MemoListItem = () => {
                 <Text style={styles.memoListItemDate}>2023年10月1日 10:00</Text>
             </View>
             <View>
-                <Text style={styles.circleDeleteLabel}>x</Text>
+                <Text style={styles.circleDeleteLabel}>
+                    <AntDesign name='delete' size={20}></AntDesign>
+                </Text>
             </View>
         </View>
     )
