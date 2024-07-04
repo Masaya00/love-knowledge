@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import Header from "../../components/Header";
 import CircleButton from "../../components/CircleButton";
 import { Feather, FontAwesome } from "@expo/vector-icons";

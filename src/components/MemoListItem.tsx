@@ -1,5 +1,6 @@
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native'
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from './Icon';
 
 const MemoListItem = () => {
     return (
@@ -8,11 +9,9 @@ const MemoListItem = () => {
                 <Text style={styles.memoListItemTitle}>買い物リスト</Text>
                 <Text style={styles.memoListItemDate}>2023年10月1日 10:00</Text>
             </View>
-            <View>
-                <Text style={styles.circleDeleteLabel}>
-                    <AntDesign name='delete' size={20}></AntDesign>
-                </Text>
-            </View>
+            <TouchableOpacity onPress={() => {Alert.alert('本当に削除しますか？')}}>
+                <Icon name='delete' size={30} color='#b0b0b0'></Icon>
+            </TouchableOpacity>
         </View>
     )
 }
