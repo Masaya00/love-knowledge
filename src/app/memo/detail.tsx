@@ -3,12 +3,16 @@ import Header from "../../components/Header";
 import CircleButton from "../../components/CircleButton";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import Icon from '../../components/Icon'
-
+import { router } from "expo-router";
 
 const Detail = (): JSX.Element => {
+
+    const handlePress = (): void => {
+        router.push('/memo/edit')
+    }
+
     return (
         <View style={styles.container}>
-            <Header />
             <View style={styles.memoHeader}>
                 <Text style={styles.memoTitle}>買い物リスト</Text>
                 <Text style={styles.memoDate}>2023年10月1日</Text>
@@ -20,7 +24,7 @@ const Detail = (): JSX.Element => {
                     本文ようなので使い方を間違えると不自然に見えることがあります。
                 </Text>
             </ScrollView>
-            <CircleButton style={{top: 160, bottom: 'auto'}}>
+            <CircleButton onPress={handlePress} style={{top: 60, bottom: 'auto'}}>
                 <Icon name="pencil" size={40} color='#ffffff'></Icon>
             </CircleButton>
         </View>

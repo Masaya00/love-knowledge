@@ -1,3 +1,4 @@
+import { Link } from 'expo-router'
 import { View, Text, StyleSheet } from 'react-native'
 
 const Header = () => {
@@ -5,7 +6,9 @@ const Header = () => {
         <View style={styles.header}>
             <View style={styles.headerInner}>
                 <Text style={styles.headerTitle}>Hello World</Text>
-                <Text style={styles.headerRight}>ログアウト</Text>
+                <Link href='/auth/login' asChild>
+                    <Text style={styles.headerRight}>ログアウト</Text>
+                </Link>
             </View>
         </View>
     )
