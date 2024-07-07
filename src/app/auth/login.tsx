@@ -2,8 +2,12 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "reac
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { Link, router } from "expo-router";
+import { useState } from "react";
 
 const Login = (): JSX.Element => {
+
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
 
     const handlePress = (): void => {
         // login処理を行う
@@ -15,8 +19,24 @@ const Login = (): JSX.Element => {
         <View style={styles.container}>
             <View style={styles.inner}>
                 <Text style={styles.title}>Login</Text>
-                <TextInput style={styles.textInput} value="Email Address"></TextInput>
-                <TextInput style={styles.textInput} value="Password"></TextInput>
+                <TextInput
+                    style={styles.textInput}
+                    value={email}
+                    onChange={(text) => { setEmail(text)} }
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    placeholder="Email Address"
+                    textContentType="emailAddress"
+                ></TextInput>
+                <TextInput 
+                    style={styles.textInput} 
+                    value={password}
+                    onChange={(text) => {setPassword(text)}}
+                    autoCapitalize="none"
+                    secureTextEntry
+                    placeholder="Password"
+                    textContentType="password"
+                ></TextInput>
                 <Button onPress={handlePress}>Submit</Button>
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not Registered?</Text>
@@ -54,7 +74,6 @@ const styles = StyleSheet.create({
         padding: 8,
         fontSize: 16,
         marginBottom: 16,
-        color: 'gray',
     },
     footer: {
         flexDirection: 'row'
