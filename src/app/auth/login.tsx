@@ -3,16 +3,25 @@ import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { Link, router } from "expo-router";
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../config'
 
 const Login = (): JSX.Element => {
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
 
-    const handlePress = (): void => {
+    const handlePress = (email: string, password: string): void => {
         // login処理を行う
-        // メモ一覧に遷移する
-        router.replace('/memo/list')
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential.user.uid)
+            router.replace('/memo/list')
+        })
+        .catch((error) => {
+            const {code, message} = error
+            Alert.alert(message)
+        })
     }
 
     return (
@@ -22,7 +31,7 @@ const Login = (): JSX.Element => {
                 <TextInput
                     style={styles.textInput}
                     value={email}
-                    onChange={(text) => { setEmail(text)} }
+                    onChange={(e) => { setEmail(e.nativeEvent.text)} }
                     autoCapitalize="none"
                     keyboardType="email-address"
                     placeholder="Email Address"
@@ -31,16 +40,16 @@ const Login = (): JSX.Element => {
                 <TextInput 
                     style={styles.textInput} 
                     value={password}
-                    onChange={(text) => {setPassword(text)}}
+                    onChange={(e) => { setPassword(e.nativeEvent.text)} }
                     autoCapitalize="none"
                     secureTextEntry
                     placeholder="Password"
                     textContentType="password"
                 ></TextInput>
-                <Button onPress={handlePress}>Submit</Button>
+                <Button onPress={() => {handlePress(email, password)}}>Submit</Button>
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Not Registered?</Text>
-                    <Link href='/auth/signup' asChild>
+                    <Link href='/auth/signup' asChild replace>
                         <TouchableOpacity>
                             <Text style={styles.footerLink}>Sign Up Here</Text>
                         </TouchableOpacity>
