@@ -14,15 +14,12 @@ const Signup = (): JSX.Element => {
 
     const handlePress = (email: string, password: string): void => {
         // 会員登録処理を行う
-        console.log(email, password)
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log(userCredential.user.uid)
             router.replace('/memo/list')
         })
         .catch((error) => {
             const { code, message } = error
-            console.log(code, message)
             Alert.alert(message)
         })
     }

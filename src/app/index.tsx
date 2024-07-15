@@ -8,7 +8,6 @@ const Index = (): JSX.Element => {
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            console.log(`user: ${user}`)
             if(user !== null) {
                 router.replace('/memo/list')
             }

@@ -15,7 +15,6 @@ const Login = (): JSX.Element => {
         // login処理を行う
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log(userCredential.user.uid)
             router.replace('/memo/list')
         })
         .catch((error) => {

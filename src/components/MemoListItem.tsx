@@ -3,6 +3,8 @@ import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from './Icon';
 import { Link } from 'expo-router';
 import { type Memo } from '../../types/memo'
+import { auth, db } from '../config';
+import { deleteDoc, doc } from 'firebase/firestore';
 
 interface Props {
     memo: Memo
@@ -17,6 +19,28 @@ const MemoListItem = (props: Props) => {
 
     const dateString = memo.updatedAt.toDate().toLocaleString('ja-JP')
 
+    const handlePress = (id: string): void => {
+        
+        if (auth.currentUser === null) return
+        const ref = doc(db, `users/${auth.currentUser.uid}/memos`, id)
+        Alert.alert('メモを削除します', 'よろしいですか？', [
+            {
+                text: 'キャンセル'
+            },
+            {
+                text: '削除する',
+                style: 'destructive',
+                onPress: () => {
+                    deleteDoc(ref)
+                    .catch((error) => {
+                        Alert.alert('削除に失敗しました')
+                    })
+                }
+            }
+        ])
+
+    }
+
     return (
         <Link
             href={{ pathname: '/memo/detail', params: { id: memo.id }}}
@@ -27,7 +51,7 @@ const MemoListItem = (props: Props) => {
                     <Text numberOfLines={1} style={styles.memoListItemTitle}>{bodyText}</Text>
                     <Text style={styles.memoListItemDate}>{dateString}</Text>
                 </View>
-                <TouchableOpacity onPress={() => {Alert.alert('本当に削除しますか？')}}>
+                <TouchableOpacity onPress={() => handlePress(memo.id)}>
                     <Icon name='delete' size={30} color='#b0b0b0'></Icon>
                 </TouchableOpacity>
             </TouchableOpacity>

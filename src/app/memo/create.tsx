@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Alert } from "react-native";
 import KeyboardAvoidingView from "../../components/KeyboardAvoidingView"
 import Header from "../../components/Header";
 import CircleButton from "../../components/CircleButton";
@@ -14,25 +14,16 @@ const Create = (): JSX.Element => {
 
     const [ bodyText, setBodyText] = useState("")
 
-    const handlePress = async (): Promise => {
+    const handlePress = async (): Promise<any> => {
         if (auth.currentUser === null) { return }
         const ref = collection(db, `users/${auth.currentUser.uid}/memos`)
-        // addDoc(collection(db, 'memos'), {
-        //     bodyText: 'test'
-        // })
-        // .then((docRef) => {
-        //     console.log('success', docRef.id)
-        //     router.back()
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // })
+
         await addDoc(ref, {
             bodyText: bodyText,
             updatedAt: Timestamp.fromDate(new Date()),
         })
         .catch((error) => {
-            console.log(error)
+            Alert.alert('登録に失敗しました')
         })
         router.back()
     }
